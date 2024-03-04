@@ -3,6 +3,13 @@ cmake_minimum_required(VERSION 3.20)
 project(SteamAudio)
 
 option(SA_BUILD_FLATC "Whether to compile the bundled flatbuffers. If set to OFF (for example, if cross-compiling), then the caller must set FlatBuffers_EXECUTABLE" ON)
+option(SA_BUILD_ZLIB "Build the bundled Zlib" ON)
+
+if (SA_BUILD_ZLIB)
+    add_subdirectory(zlib EXCLUDE_FROM_ALL)    
+	set(ZLIB_LIBRARY zlibstatic)
+	set(ZLIB_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/zlib" CACHE INTERNAL "")
+endif()
 
 set(PFFFT_USE_FFTPACK OFF)
 add_subdirectory(pffft EXCLUDE_FROM_ALL)

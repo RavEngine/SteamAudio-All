@@ -2,15 +2,20 @@ cmake_minimum_required(VERSION 3.20)
 
 project(SteamAudio)
 
+option(SA_BUILD_FLATC "Whether to compile the bundled flatbuffers. If set to OFF (for example, if cross-compiling), then the caller must set FlatBuffers_EXECUTABLE" ON)
+
 set(PFFFT_USE_FFTPACK OFF)
 add_subdirectory(pffft EXCLUDE_FROM_ALL)
 
 set(BUILD_TESTS OFF CACHE INTERNAL "")
 add_subdirectory(libmysofa EXCLUDE_FROM_ALL)
 
-set(FLATBUFFERS_BUILD_TESTS OFF CACHE INTERNAL "")
-set(FLATBUFFERS_INSTALL OFF CACHE INTERNAL "")
-add_subdirectory(flatbuffers EXCLUDE_FROM_ALL)
+if (SA_BUILD_FLATC)
+    set(FLATBUFFERS_BUILD_TESTS OFF CACHE INTERNAL "")
+    set(FLATBUFFERS_INSTALL OFF CACHE INTERNAL "")
+    add_subdirectory(flatbuffers EXCLUDE_FROM_ALL)
+    set(FlatBuffers_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/flatbuffers/$<CONFIGURATION>/flatc")
+endif()
 
 set(PFFFT_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake/")
 set(MySOFA_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake/")
@@ -29,7 +34,6 @@ set(PFFFT_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/pffft")
 set(MySOFA_LIBRARY mysofa-static)
 set(MySOFA_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/libmysofa/src/hrtf")
 
-set(FlatBuffers_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/flatbuffers/$<CONFIGURATION>/flatc")
 set(FlatBuffers_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/flatbuffers/include")
 add_subdirectory(steam-audio/core EXCLUDE_FROM_ALL)
 

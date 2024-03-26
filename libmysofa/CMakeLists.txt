@@ -128,17 +128,17 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Install exported targets as config files for use from install tree
-install(EXPORT mysofa_exports
-  NAMESPACE mysofa::
-  FILE mysofaTargets.cmake
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/mysofa
-)
+# install(EXPORT mysofa_exports
+#   NAMESPACE mysofa::
+#   FILE mysofaTargets.cmake
+#   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/mysofa
+# )
 
 # Create a target export file for use from the build tree.
-export(EXPORT mysofa_exports
-  NAMESPACE mysofa::
-  FILE ${CMAKE_CURRENT_BINARY_DIR}/mysofaTargets.cmake
-)
+# export(EXPORT mysofa_exports
+#   NAMESPACE mysofa::
+#   FILE ${CMAKE_CURRENT_BINARY_DIR}/mysofaTargets.cmake
+# )
 
 include(CMakePackageConfigHelpers)
 
